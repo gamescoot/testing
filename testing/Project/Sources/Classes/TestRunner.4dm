@@ -491,14 +491,15 @@ Function _generateJSONReport()
                         "status"; $hasFailures ? "fail" : "ok"\
                 )
 
-                // Include individual test results with assertions
+                // Include individual test results with assertions and runtime errors
                 var $testResults : Collection
                 $testResults:=[]
                 var $suite : Object
                 var $test : Object
                 For each ($suite; This:C1470.results.suites)
                         For each ($test; $suite.tests)
-                                $testResults.push(New object:C1471(\
+                                var $testResult : Object
+                                $testResult:=New object:C1471(\
                                         "name"; $test.name; \
                                         "suite"; $test.suite; \
                                         "passed"; Not:C34($test.failed) && Not:C34($test.skipped); \
@@ -507,7 +508,17 @@ Function _generateJSONReport()
                                         "duration"; $test.duration; \
                                         "assertions"; $test.assertions; \
                                         "assertionCount"; $test.assertionCount\
-                                ))
+                                )
+
+                                // Include runtime errors and call chain if present
+                                If ($test.runtimeErrors#Null:C1517) && ($test.runtimeErrors.length>0)
+                                        $testResult.runtimeErrors:=$test.runtimeErrors
+                                End if
+                                If ($test.callChain#Null:C1517)
+                                        $testResult.callChain:=$test.callChain
+                                End if
+
+                                $testResults.push($testResult)
                         End for each
                 End for each
                 $jsonReport.testResults:=$testResults
@@ -520,19 +531,22 @@ Function _generateJSONReport()
                         For each ($failedTest; This:C1470.results.failedTests)
                                 var $terseFailure : Object
                                 $terseFailure:=New object:C1471("test"; $failedTest.name; "suite"; $failedTest.suite)
-                                // Only include error details if they exist and are different
+
+                                // Include runtime error details and call chain
                                 If ($failedTest.runtimeErrors.length>0)
                                         $terseFailure.error:=$failedTest.runtimeErrors[0].text
+                                        $terseFailure.runtimeErrors:=$failedTest.runtimeErrors
                                 Else
                                         If ($failedTest.logMessages.length>0)
                                                 $terseFailure.reason:=$failedTest.logMessages[0]
                                         End if
                                 End if
 
-                                // Include call chain in verbose JSON output
-                                If (This:C1470.verboseOutput) && ($failedTest.callChain#Null)
+                                // Always include call chain if present
+                                If ($failedTest.callChain#Null:C1517)
                                         $terseFailure.callChain:=$failedTest.callChain
                                 End if
+
                                 $failedTests.push($terseFailure)
                         End for each
                         $jsonReport.failures:=$failedTests

@@ -100,6 +100,14 @@ Function getResult() : Object
         var $duration : Integer
         $duration:=This:C1470.endTime-This:C1470.startTime
 
+        // Get callChain from first runtime error if available, otherwise from Testing context
+        var $callChain : Collection
+        If (This:C1470.runtimeErrors.length>0) && (This:C1470.runtimeErrors[0].callChain#Null:C1517)
+                $callChain:=This:C1470.runtimeErrors[0].callChain
+        Else
+                $callChain:=This:C1470.t.failureCallChain
+        End if
+
         return New object:C1471(\
                 "name"; This:C1470.functionName; \
                 "passed"; Not:C34(This:C1470.t.failed) && Not:C34(This:C1470.skipped); \
@@ -112,7 +120,7 @@ Function getResult() : Object
                 "assertions"; This:C1470.t.assertions; \
                 "assertionCount"; This:C1470.t.assertions.length; \
                 "tags"; This:C1470.tags; \
-                "callChain"; This:C1470.t.failureCallChain\
+                "callChain"; $callChain\
                 )
 
 Function shouldSkip() : Boolean

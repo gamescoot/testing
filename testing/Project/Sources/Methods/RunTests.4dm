@@ -1,4 +1,5 @@
 //%attributes = {}
+
 // Parse user parameters to check for parallel execution
 var $userParam : Text
 var $real : Real
@@ -15,16 +16,16 @@ For each ($part; $parts)
 	$part:=Replace string:C233($part; " "; "")  // Remove any extra spaces
 	If ($part#"")
 		var $keyValue : Collection
-
+		
 		// Try = separator first
 		If (Position:C15("="; $part)>0)
 			$keyValue:=Split string:C1554($part; "=")
 			If ($keyValue.length=2)
 				$params[$keyValue[0]]:=$keyValue[1]
-			End if
-		End if
-	End if
-End for each
+			End if 
+		End if 
+	End if 
+End for each 
 
 // Determine which runner to use
 // Note: For standalone testing, we pass Null for hostStorage since there's no host project
@@ -32,17 +33,16 @@ End for each
 var $runner : Object
 If ($params.parallel="true")
 	$runner:=cs:C1710.ParallelTestRunner.new(Null:C1517; Null:C1517; $params)
-Else
+Else 
 	$runner:=cs:C1710.TestRunner.new(Null:C1517; Null:C1517; $params)
-End if
+End if 
 
-If (Application info:C1599.headless)
+If (Get application info:C1599.headless)
 	$runner.run()
-	
 	If (Application type:C494#6)
 		QUIT 4D:C291
-	End if 
-	
-Else 
+	End if
+
+Else
 	$runner.run()
 End if 

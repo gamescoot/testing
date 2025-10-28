@@ -40,30 +40,49 @@ Function test_user_persistence($t : cs.Testing)
 
 ## Setup
 
-Create a project method (e.g., "test") with this code:
+**Step 1:** Create `Testing_ReportHostError` project method:
 
 ```4d
-var $runner : cs.Testing.TestRunner
-$runner:=cs.Testing.TestRunner.new(cs)
-$runner.run()
+// Error handler to capture host project errors and report to testing component
+cs.Testing.ErrorReporter.new().reportHostError(Error; Error method; Error formula; Error line; Current process; Get call chain)
+```
+
+**Step 2:** Create `Testing_ReportGlobalError` project method:
+
+```4d
+// Error handler to capture global project errors and report to testing component
+cs.Testing.ErrorReporter.new().reportGlobalError(Error; Error method; Error formula; Error line; Current process; Get call chain)
+```
+
+**Step 3:** Create `RunTests` project method:
+
+```4d
+// Necessary to run tests using the Testing component, passing in cs from host.
+// Use as entrypoint when calling via tool4d
+// e.g. tool4d --project Project/MyProject.4DProject --skip-onstartup --dataless --startup-method "RunTests"
+ON ERR CALL("Testing_ReportGlobalError"; ek global)
+ON ERR CALL("Testing_ReportHostError")
+Testing_RunTestsWithCs(cs)
+ON ERR CALL("")
+ON ERR CALL(""; ek global)
 ```
 
 ## Running Tests
 
 ```bash
 # Run all tests
-tool4d --project YourProject.4DProject --startup-method "test"
+tool4d --project YourProject.4DProject --startup-method "RunTests"
 
 # Run with JSON output
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "format=json"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "format=json"
 
 # Run specific tests
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "test=UserServiceTest"
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "test=UserServiceTest.test_user_creation"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "test=UserServiceTest"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "test=UserServiceTest.test_user_creation"
 
 # Filter by tags
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "tags=unit"
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "tags=unit excludeTags=slow"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "tags=unit"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "tags=unit excludeTags=slow"
 ```
 
 ## Table-Driven Tests

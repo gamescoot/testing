@@ -56,50 +56,66 @@ Function test_string_comparison($t : cs.Testing.Testing)
 
 ```bash
 # Human-readable output (terse by default)
-tool4d --project YourProject.4DProject --startup-method "test"
+tool4d --project YourProject.4DProject --startup-method "RunTests"
 
 # Verbose human-readable output
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "verbose=true"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "verbose=true"
 
 # JSON output for CI/CD (terse by default)
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "format=json"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "format=json"
 
 # Verbose JSON output
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "format=json verbose=true"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "format=json verbose=true"
 
 # Run specific tests by pattern
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "test=ExampleTest"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "test=ExampleTest"
 
 # Run tests by tags
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "tags=unit"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "tags=unit"
 
 # Exclude slow tests
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "excludeTags=slow"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "excludeTags=slow"
 
 # Combine multiple parameters
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "format=json tags=unit,integration verbose=true"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "format=json tags=unit,integration verbose=true"
 ```
 
 ## Required Setup
 
-### Creating the Startup Method
-
-To run tests using the tool4d commands, you must create a project method to serve as the startup method. This method bridges your host project with the testing component.
-
-Create a project method (e.g., named "test") with the following code:
+### Step 1: Create `Testing_ReportHostError` Project Method
 
 ```4d
-var $runner : cs.Testing.TestRunner
-$runner:=cs.Testing.TestRunner.new(cs)
-
-$runner.run()
+// Error handler to capture host project errors and report to testing component
+cs.Testing.ErrorReporter.new().reportHostError(Error; Error method; Error formula; Error line; Current process; Get call chain)
 ```
 
-**Important:** You must pass the host project's class store (`cs`) to the component's `TestRunner.new()` method. This allows the testing component to discover and run test classes from your host project.
+### Step 2: Create `Testing_ReportGlobalError` Project Method
+
+```4d
+// Error handler to capture global project errors and report to testing component
+cs.Testing.ErrorReporter.new().reportGlobalError(Error; Error method; Error formula; Error line; Current process; Get call chain)
+```
+
+### Step 3: Create `RunTests` Project Method
+
+```4d
+// Necessary to run tests using the Testing component, passing in cs from host.
+// Use as entrypoint when calling via tool4d
+// e.g. tool4d --project Project/MyProject.4DProject --skip-onstartup --dataless --startup-method "RunTests"
+ON ERR CALL("Testing_ReportGlobalError"; ek global)
+ON ERR CALL("Testing_ReportHostError")
+Testing_RunTestsWithCs(cs)
+ON ERR CALL("")
+ON ERR CALL(""; ek global)
+```
+
+**Important:** You must pass the host project's class store (`cs`) to `Testing_RunTestsWithCs()`. This allows the testing component to discover and run test classes from your host project.
 
 ### Why This is Required
 
-The testing framework needs access to your project's class store to:
+**Error Handler:** Components cannot access the host's process variables (like `Error`, `Error method`, etc.). When a runtime error occurs in the host project during testing, the component cannot see it. The error handler must be in the host project to capture these process variables and manually pass them to the component using `cs.ErrorReporter`.
+
+**Class Store (`cs`):** The testing framework needs access to your project's class store to:
 - Discover test classes ending with "Test"
 - Instantiate test classes from your project
 - Execute test methods within the correct context
@@ -264,37 +280,37 @@ Run specific tests by name or pattern using the `test=` parameter:
 
 ```bash
 # Run all tests in ExampleTest suite
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "test=ExampleTest"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "test=ExampleTest"
 
 # Run all tests in multiple suites
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "test=ExampleTest,ErrorHandlingTest"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "test=ExampleTest,ErrorHandlingTest"
 ```
 
 ### Filter by Specific Test Method
 
 ```bash
 # Run specific test method
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "test=ExampleTest.test_areEqual_pass"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "test=ExampleTest.test_areEqual_pass"
 
 # Run multiple specific methods
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "test=ExampleTest.test_areEqual_pass,ErrorHandlingTest.test_error_handler_initialization"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "test=ExampleTest.test_areEqual_pass,ErrorHandlingTest.test_error_handler_initialization"
 ```
 
 ### Wildcard Filtering
 
 ```bash
 # Run all test suites containing "Error" in the name
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "test=*Error*"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "test=*Error*"
 
 # Run all test methods starting with "test_setup"
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "test=*test_setup*"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "test=*test_setup*"
 ```
 
 ### Combine with JSON Output
 
 ```bash
 # Filter tests and get JSON output
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "format=json test=ExampleTest"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "format=json test=ExampleTest"
 ```
 
 ## Parameter Format
@@ -388,13 +404,13 @@ Run tests that have **any** of the specified tags:
 
 ```bash
 # Run all fast tests
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "tags=fast"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "tags=fast"
 
 # Run tests tagged as either unit OR integration
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "tags=unit,integration"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "tags=unit,integration"
 
 # JSON output with tag filtering
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "format=json tags=performance"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "format=json tags=performance"
 ```
 
 #### Exclude Tags (Highest Priority)
@@ -402,13 +418,13 @@ Exclude tests that have **any** of the specified tags:
 
 ```bash
 # Run all tests EXCEPT slow ones
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "excludeTags=slow"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "excludeTags=slow"
 
 # Exclude both slow and external tests
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "excludeTags=slow,external"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "excludeTags=slow,external"
 
 # Combine with JSON output
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "format=json excludeTags=integration"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "format=json excludeTags=integration"
 ```
 
 #### Require All Tags (AND Logic)
@@ -416,10 +432,10 @@ Run tests that have **all** of the specified tags:
 
 ```bash
 # Run tests that are BOTH integration AND performance
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "requireTags=integration,performance"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "requireTags=integration,performance"
 
 # Run tests that are unit, fast, AND edge-case
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "requireTags=unit,fast,edge-case"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "requireTags=unit,fast,edge-case"
 ```
 
 #### Combined Tag Filtering
@@ -427,13 +443,13 @@ You can combine multiple tag filtering options. **Exclude tags have the highest 
 
 ```bash
 # Run unit tests but exclude slow ones
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "tags=unit excludeTags=slow"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "tags=unit excludeTags=slow"
 
 # Run integration tests that are also performance tests, but exclude external ones
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "tags=integration requireTags=performance excludeTags=external"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "tags=integration requireTags=performance excludeTags=external"
 
 # Complex filtering with JSON output
-tool4d --project YourProject.4DProject --startup-method "test" --user-param "format=json tags=unit,integration excludeTags=slow requireTags=fast"
+tool4d --project YourProject.4DProject --startup-method "RunTests" --user-param "format=json tags=unit,integration excludeTags=slow requireTags=fast"
 ```
 
 ### Common Tagging Strategies
@@ -493,15 +509,15 @@ Use tags to run different test suites in different CI/CD scenarios:
 ```yml
 # Run only fast unit tests for PR validation
 - name: Quick Tests
-  run: tool4d --project testing.4DProject --startup-method "test" --user-param "format=json tags=unit,fast excludeTags=slow"
+  run: tool4d --project testing.4DProject --startup-method "RunTests" --user-param "format=json tags=unit,fast excludeTags=slow"
 
 # Run integration tests separately
 - name: Integration Tests  
-  run: tool4d --project testing.4DProject --startup-method "test" --user-param "format=json tags=integration"
+  run: tool4d --project testing.4DProject --startup-method "RunTests" --user-param "format=json tags=integration"
 
 # Run performance tests on nightly builds
 - name: Performance Tests
-  run: tool4d --project testing.4DProject --startup-method "test" --user-param "format=json tags=performance"
+  run: tool4d --project testing.4DProject --startup-method "RunTests" --user-param "format=json tags=performance"
 ```
 
 ### Tag Filtering Precedence
@@ -624,7 +640,7 @@ jobs:
         run: |
           tool4d --project testing/Project/testing.4DProject \
                  --skip-onstartup --dataless \
-                 --startup-method "test" \
+                 --startup-method "RunTests" \
                  --user-param "format=json" > test-results.json
           
       - name: Check Test Results

@@ -24,7 +24,6 @@ Function log($message : Text)
 Function fail($expected : Variant; $actual : Variant; $message : Text)
         // Mark the test as failed and record assertion details
         This:C1470.failed:=True:C214
-        This:C1470.failureCallChain:=Get call chain:C1662
 
         var $exp : Variant
         var $act : Variant
@@ -55,8 +54,6 @@ Function fail($expected : Variant; $actual : Variant; $message : Text)
 Function fatal()
 	This:C1470.failed:=True:C214
 	This:C1470.done:=True:C214
-	// Capture call chain when test fails fatally for debugging
-	This:C1470.failureCallChain:=Call chain:C1662
 	
 Function resetForNewTest()
 	This:C1470.failed:=False:C215

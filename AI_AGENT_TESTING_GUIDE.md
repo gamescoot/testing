@@ -205,16 +205,16 @@ make test-ci               # Generate JUnit XML for CI/CD
 ### Manual Execution
 ```bash
 # All tests (human output)
-tool4d --project path/to/project.4DProject --startup-method "test"
+tool4d --project path/to/project.4DProject --startup-method "RunTests"
 
 # JSON output for CI/CD
-tool4d --project path/to/project.4DProject --startup-method "test" --user-param "format=json"
+tool4d --project path/to/project.4DProject --startup-method "RunTests" --user-param "format=json"
 
 # JUnit XML output
-tool4d --project path/to/project.4DProject --startup-method "test" --user-param "format=junit"
+tool4d --project path/to/project.4DProject --startup-method "RunTests" --user-param "format=junit"
 
 # Verbose JSON with full details
-tool4d --project path/to/project.4DProject --startup-method "test" --user-param "format=json verbose=true"
+tool4d --project path/to/project.4DProject --startup-method "RunTests" --user-param "format=json verbose=true"
 ```
 
 ## Advanced Filtering

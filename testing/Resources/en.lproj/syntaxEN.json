@@ -1,15 +1,5 @@
 {
 	"_method_": {
-		"TestGlobalErrorHandler": {
-			"Syntax": "**TestGlobalErrorHandler**()",
-			"Params": [],
-			"Summary": ""
-		},
-		"TestErrorHandler": {
-			"Syntax": "**TestErrorHandler**()",
-			"Params": [],
-			"Summary": ""
-		},
 		"Testing_RunTestsWithCs": {
 			"Syntax": "**Testing_RunTestsWithCs**( *cs* : 4D.Object; *hostStorage* : 4D.Object; *userParams* : 4D.Object )",
 			"Params": [
@@ -98,6 +88,13 @@
 				"Summary": ""
 			}
 		},
+		"_TestingTest": {
+			"new()": {
+				"Syntax": "**.new**()",
+				"Params": [],
+				"Summary": ""
+			}
+		},
 		"_ExampleTest": {
 			"new()": {
 				"Syntax": "**.new**()",
@@ -129,13 +126,6 @@
 			}
 		},
 		"_JSONOutputTest": {
-			"new()": {
-				"Syntax": "**.new**()",
-				"Params": [],
-				"Summary": ""
-			}
-		},
-		"_TestingTest": {
 			"new()": {
 				"Syntax": "**.new**()",
 				"Params": [],
@@ -198,7 +188,7 @@
 				"Summary": ""
 			}
 		},
-		"TriggerConfigurationTest": {
+		"Assert": {
 			"new()": {
 				"Syntax": "**.new**()",
 				"Params": [],
@@ -212,14 +202,21 @@
 				"Summary": ""
 			}
 		},
-		"Assert": {
+		"UnitStatsTracker": {
 			"new()": {
 				"Syntax": "**.new**()",
 				"Params": [],
 				"Summary": ""
 			}
 		},
-		"UnitStatsTracker": {
+		"_ErrorReporterTest": {
+			"new()": {
+				"Syntax": "**.new**()",
+				"Params": [],
+				"Summary": ""
+			}
+		},
+		"TriggerConfigurationTest": {
 			"new()": {
 				"Syntax": "**.new**()",
 				"Params": [],
@@ -247,6 +244,13 @@
 				"Summary": ""
 			}
 		},
+		"_SetupTeardownTest": {
+			"new()": {
+				"Syntax": "**.new**()",
+				"Params": [],
+				"Summary": ""
+			}
+		},
 		"_TaggingExampleTest": {
 			"new()": {
 				"Syntax": "**.new**()",
@@ -254,7 +258,7 @@
 				"Summary": ""
 			}
 		},
-		"_SetupTeardownTest": {
+		"ErrorReporter": {
 			"new()": {
 				"Syntax": "**.new**()",
 				"Params": [],
@@ -1023,6 +1027,173 @@
 			"Summary": ""
 		}
 	},
+	"_TestingTest": {
+		"test_run_subtest_stats_isolated()": {
+			"Syntax": "**.test_run_subtest_stats_isolated**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_run_uses_parent_context()": {
+			"Syntax": "**.test_run_uses_parent_context**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_run_executes_subtest()": {
+			"Syntax": "**.test_run_executes_subtest**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_fail_after_fatal()": {
+			"Syntax": "**.test_fail_after_fatal**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_multiple_fail_calls()": {
+			"Syntax": "**.test_multiple_fail_calls**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_state_persistence()": {
+			"Syntax": "**.test_state_persistence**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_run_with_data_argument()": {
+			"Syntax": "**.test_run_with_data_argument**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_log_empty_messages()": {
+			"Syntax": "**.test_log_empty_messages**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_run_propagates_failure()": {
+			"Syntax": "**.test_run_propagates_failure**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_run_propagates_assertions()": {
+			"Syntax": "**.test_run_propagates_assertions**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_fatal_method()": {
+			"Syntax": "**.test_fatal_method**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_fail_method()": {
+			"Syntax": "**.test_fail_method**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_testing_initialization()": {
+			"Syntax": "**.test_testing_initialization**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_log_message_collection()": {
+			"Syntax": "**.test_log_message_collection**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_log_with_special_characters()": {
+			"Syntax": "**.test_log_with_special_characters**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		}
+	},
 	"_ExampleTest": {
 		"test_isNotNull_pass()": {
 			"Syntax": "**.test_isNotNull_pass**( *t* : cs.Testing.Testing )",
@@ -1206,173 +1377,6 @@
 		},
 		"test_results_object_structure()": {
 			"Syntax": "**.test_results_object_structure**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		}
-	},
-	"_TestingTest": {
-		"test_run_subtest_stats_isolated()": {
-			"Syntax": "**.test_run_subtest_stats_isolated**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_run_uses_parent_context()": {
-			"Syntax": "**.test_run_uses_parent_context**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_run_executes_subtest()": {
-			"Syntax": "**.test_run_executes_subtest**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_fail_after_fatal()": {
-			"Syntax": "**.test_fail_after_fatal**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_multiple_fail_calls()": {
-			"Syntax": "**.test_multiple_fail_calls**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_state_persistence()": {
-			"Syntax": "**.test_state_persistence**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_run_with_data_argument()": {
-			"Syntax": "**.test_run_with_data_argument**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_log_empty_messages()": {
-			"Syntax": "**.test_log_empty_messages**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_run_propagates_failure()": {
-			"Syntax": "**.test_run_propagates_failure**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_run_propagates_assertions()": {
-			"Syntax": "**.test_run_propagates_assertions**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_fatal_method()": {
-			"Syntax": "**.test_fatal_method**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_fail_method()": {
-			"Syntax": "**.test_fail_method**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_testing_initialization()": {
-			"Syntax": "**.test_testing_initialization**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_log_message_collection()": {
-			"Syntax": "**.test_log_message_collection**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_log_with_special_characters()": {
-			"Syntax": "**.test_log_with_special_characters**( *t* : cs.Testing.Testing )",
 			"Params": [
 				[
 					"t",
@@ -1992,131 +1996,6 @@
 			"Syntax": "class : 4D.Class"
 		}
 	},
-	"_TransactionDebugTest": {
-		"test_basicStartTransaction()": {
-			"Syntax": "**.test_basicStartTransaction**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_basicInTransaction()": {
-			"Syntax": "**.test_basicInTransaction**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		}
-	},
-	"TriggerConfigurationTest": {
-		"test_storageInitializedWithTriggersEnabled()": {
-			"Syntax": "**.test_storageInitializedWithTriggersEnabled**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_defaultTriggerBehavior()": {
-			"Syntax": "**.test_defaultTriggerBehavior**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_triggerControlParsing_enabled()": {
-			"Syntax": "**.test_triggerControlParsing_enabled**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_storageInitializedWithDefaultBehavior()": {
-			"Syntax": "**.test_storageInitializedWithDefaultBehavior**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_triggersDisabledParameter()": {
-			"Syntax": "**.test_triggersDisabledParameter**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_triggersEnabledParameter()": {
-			"Syntax": "**.test_triggersEnabledParameter**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_restoreDefaultTriggerBehavior()": {
-			"Syntax": "**.test_restoreDefaultTriggerBehavior**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_triggerControlParsing_disabled()": {
-			"Syntax": "**.test_triggerControlParsing_disabled**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_triggerControlParsing_default()": {
-			"Syntax": "**.test_triggerControlParsing_default**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		}
-	},
 	"_SimpleTransactionTest": {
 		"test_disableTransaction()": {
 			"Syntax": "**.test_disableTransaction**( *t* : cs.Testing.Testing )",
@@ -2131,63 +2010,6 @@
 		},
 		"test_basicTransaction()": {
 			"Syntax": "**.test_basicTransaction**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		}
-	},
-	"TriggerControlTest": {
-		"test_storageAccessibleInFormula()": {
-			"Syntax": "**.test_storageAccessibleInFormula**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_testModeFlagIsBoolean()": {
-			"Syntax": "**.test_testModeFlagIsBoolean**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_triggerCheckPattern()": {
-			"Syntax": "**.test_triggerCheckPattern**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_testModeFlagIsSet()": {
-			"Syntax": "**.test_testModeFlagIsSet**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_storageTriggersDisabledExists()": {
-			"Syntax": "**.test_storageTriggersDisabledExists**( *t* : cs.Testing.Testing )",
 			"Params": [
 				[
 					"t",
@@ -2362,6 +2184,63 @@
 			"Summary": ""
 		}
 	},
+	"TriggerControlTest": {
+		"test_storageAccessibleInFormula()": {
+			"Syntax": "**.test_storageAccessibleInFormula**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_testModeFlagIsBoolean()": {
+			"Syntax": "**.test_testModeFlagIsBoolean**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_triggerCheckPattern()": {
+			"Syntax": "**.test_triggerCheckPattern**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_testModeFlagIsSet()": {
+			"Syntax": "**.test_testModeFlagIsSet**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_storageTriggersDisabledExists()": {
+			"Syntax": "**.test_storageTriggersDisabledExists**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		}
+	},
 	"UnitStatsTracker": {
 		"createStatistic()": {
 			"Syntax": "**.createStatistic**( *name* : Text ) : cs.Testing.UnitStatsTracker",
@@ -2424,6 +2303,232 @@
 		"resetStatistics()": {
 			"Syntax": "**.resetStatistics**()",
 			"Params": [],
+			"Summary": ""
+		}
+	},
+	"_ErrorReporterTest": {
+		"test_timestampIsRecent()": {
+			"Syntax": "**.test_timestampIsRecent**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_contextValues()": {
+			"Syntax": "**.test_contextValues**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_errorStructureIsShared()": {
+			"Syntax": "**.test_errorStructureIsShared**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_noInstanceStateRequired()": {
+			"Syntax": "**.test_noInstanceStateRequired**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_errorStorageInitialization()": {
+			"Syntax": "**.test_errorStorageInitialization**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_reportLocalError()": {
+			"Syntax": "**.test_reportLocalError**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_multipleErrors()": {
+			"Syntax": "**.test_multipleErrors**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_reportGlobalError()": {
+			"Syntax": "**.test_reportGlobalError**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_reportHostError()": {
+			"Syntax": "**.test_reportHostError**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		}
+	},
+	"_TransactionDebugTest": {
+		"test_basicStartTransaction()": {
+			"Syntax": "**.test_basicStartTransaction**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_basicInTransaction()": {
+			"Syntax": "**.test_basicInTransaction**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		}
+	},
+	"TriggerConfigurationTest": {
+		"test_storageInitializedWithTriggersEnabled()": {
+			"Syntax": "**.test_storageInitializedWithTriggersEnabled**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_defaultTriggerBehavior()": {
+			"Syntax": "**.test_defaultTriggerBehavior**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_triggerControlParsing_enabled()": {
+			"Syntax": "**.test_triggerControlParsing_enabled**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_storageInitializedWithDefaultBehavior()": {
+			"Syntax": "**.test_storageInitializedWithDefaultBehavior**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_triggersDisabledParameter()": {
+			"Syntax": "**.test_triggersDisabledParameter**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_triggersEnabledParameter()": {
+			"Syntax": "**.test_triggersEnabledParameter**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_restoreDefaultTriggerBehavior()": {
+			"Syntax": "**.test_restoreDefaultTriggerBehavior**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_triggerControlParsing_disabled()": {
+			"Syntax": "**.test_triggerControlParsing_disabled**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_triggerControlParsing_default()": {
+			"Syntax": "**.test_triggerControlParsing_default**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
 			"Summary": ""
 		}
 	},
@@ -2609,74 +2714,6 @@
 			"Summary": ""
 		}
 	},
-	"_TaggingExampleTest": {
-		"test_file_system_access()": {
-			"Syntax": "**.test_file_system_access**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_large_collection_processing()": {
-			"Syntax": "**.test_large_collection_processing**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_database_connection()": {
-			"Syntax": "**.test_database_connection**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_empty_string_handling()": {
-			"Syntax": "**.test_empty_string_handling**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_parameter_validation()": {
-			"Syntax": "**.test_parameter_validation**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		},
-		"test_basic_addition()": {
-			"Syntax": "**.test_basic_addition**( *t* : cs.Testing.Testing )",
-			"Params": [
-				[
-					"t",
-					"cs.Testing.Testing",
-					"->"
-				]
-			],
-			"Summary": ""
-		}
-	},
 	"_SetupTeardownTest": {
 		"test_beforeEach_was_called()": {
 			"Syntax": "**.test_beforeEach_was_called**( *t* : cs.Testing.Testing )",
@@ -2745,6 +2782,179 @@
 		},
 		"testData": {
 			"Syntax": "testData : Object"
+		}
+	},
+	"_TaggingExampleTest": {
+		"test_file_system_access()": {
+			"Syntax": "**.test_file_system_access**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_large_collection_processing()": {
+			"Syntax": "**.test_large_collection_processing**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_database_connection()": {
+			"Syntax": "**.test_database_connection**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_empty_string_handling()": {
+			"Syntax": "**.test_empty_string_handling**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_parameter_validation()": {
+			"Syntax": "**.test_parameter_validation**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"test_basic_addition()": {
+			"Syntax": "**.test_basic_addition**( *t* : cs.Testing.Testing )",
+			"Params": [
+				[
+					"t",
+					"cs.Testing.Testing",
+					"->"
+				]
+			],
+			"Summary": ""
+		}
+	},
+	"ErrorReporter": {
+		"reportLocalError()": {
+			"Syntax": "**.reportLocalError**( *errorCode* : Integer; *errorText* : Text; *errorMethod* : Text; *errorLine* : Integer; *processNumber* : Integer )",
+			"Params": [
+				[
+					"errorCode",
+					"Integer",
+					"->"
+				],
+				[
+					"errorText",
+					"Text",
+					"->"
+				],
+				[
+					"errorMethod",
+					"Text",
+					"->"
+				],
+				[
+					"errorLine",
+					"Integer",
+					"->"
+				],
+				[
+					"processNumber",
+					"Integer",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"reportGlobalError()": {
+			"Syntax": "**.reportGlobalError**( *errorCode* : Integer; *errorText* : Text; *errorMethod* : Text; *errorLine* : Integer; *processNumber* : Integer; *callChain* : Collection )",
+			"Params": [
+				[
+					"errorCode",
+					"Integer",
+					"->"
+				],
+				[
+					"errorText",
+					"Text",
+					"->"
+				],
+				[
+					"errorMethod",
+					"Text",
+					"->"
+				],
+				[
+					"errorLine",
+					"Integer",
+					"->"
+				],
+				[
+					"processNumber",
+					"Integer",
+					"->"
+				],
+				[
+					"callChain",
+					"Collection",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"reportHostError()": {
+			"Syntax": "**.reportHostError**( *errorCode* : Integer; *errorText* : Text; *errorMethod* : Text; *errorLine* : Integer; *processNumber* : Integer; *callChain* : Collection )",
+			"Params": [
+				[
+					"errorCode",
+					"Integer",
+					"->"
+				],
+				[
+					"errorText",
+					"Text",
+					"->"
+				],
+				[
+					"errorMethod",
+					"Text",
+					"->"
+				],
+				[
+					"errorLine",
+					"Integer",
+					"->"
+				],
+				[
+					"processNumber",
+					"Integer",
+					"->"
+				],
+				[
+					"callChain",
+					"Collection",
+					"->"
+				]
+			],
+			"Summary": ""
 		}
 	},
 	"_ParallelExecutionTest": {

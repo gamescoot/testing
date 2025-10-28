@@ -21,7 +21,7 @@ TOOL4D_URL_LINUX := https://resources-download.4d.com/release/20%20Rx/latest/lat
 PROJECT_PATH := $(PWD)/testing/Project/testing.4DProject
 
 # Base command options
-BASE_OPTS := --project $(PROJECT_PATH) --skip-onstartup --dataless --startup-method "test"
+BASE_OPTS := --project $(PROJECT_PATH) --skip-onstartup --dataless --startup-method "RunTests"
 
 # Default target
 .DEFAULT_GOAL := test

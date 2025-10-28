@@ -3,7 +3,8 @@
 Function test_basicInTransaction($t : cs:C1710.Testing)
 	// #transaction: false
 	$t.log("Testing inTransaction method")
-	
+	$q:=New collection()
+	$j:=$q[1]
 	// Cancel any existing transaction to ensure clean state
 	If ($t.inTransaction())
 		$t.cancelTransaction()

@@ -65,13 +65,13 @@ If you need more control or the Makefile doesn't meet your needs:
 
 ```bash
 # Run all tests with human output
-/Applications/tool4d.app/Contents/MacOS/tool4d --project $(PWD)/testing/Project/testing.4DProject --skip-onstartup --dataless --startup-method "test"
+/Applications/tool4d.app/Contents/MacOS/tool4d --project $(PWD)/testing/Project/testing.4DProject --skip-onstartup --dataless --startup-method "RunTests"
 
 # Run all tests with JSON output  
-/Applications/tool4d.app/Contents/MacOS/tool4d --project $(PWD)/testing/Project/testing.4DProject --skip-onstartup --dataless --startup-method "test" --user-param "format=json"
+/Applications/tool4d.app/Contents/MacOS/tool4d --project $(PWD)/testing/Project/testing.4DProject --skip-onstartup --dataless --startup-method "RunTests" --user-param "format=json"
 
 # Run all tests with JUnit XML output (saves to test-results/junit.xml)
-/Applications/tool4d.app/Contents/MacOS/tool4d --project $(PWD)/testing/Project/testing.4DProject --skip-onstartup --dataless --startup-method "test" --user-param "format=junit"
+/Applications/tool4d.app/Contents/MacOS/tool4d --project $(PWD)/testing/Project/testing.4DProject --skip-onstartup --dataless --startup-method "RunTests" --user-param "format=junit"
 ```
 
 ### Test Filtering Parameters
@@ -333,21 +333,49 @@ This flag remains set for the duration of the test run, allowing triggers in the
 
 ### Running Tests from a Host Project
 
-When running tests from a host project (not standalone), you **must** pass the host project's Storage object to enable trigger control:
+When running tests from a host project (not standalone), you **must**:
+1. Create an error handler in your host project to capture runtime errors during testing
+2. Pass the host project's class store (`cs`) to the testing component
+
+#### Step 1: Create `Testing_ReportHostError` Project Method
 
 ```4d
-// In your host project's method to run tests
-var $hostStorage : Object
-var $userParams : Object
-
-$hostStorage:=Storage  // Pass the host project's Storage
-$userParams:=New object  // Optional parameters (e.g., "triggers"; "enabled")
-
-// Call the testing component method with cs, Storage, and optional user params
-Testing_RunTestsWithCs(cs; $hostStorage; $userParams)
+// Error handler to capture host project errors and report to testing component
+cs.Testing.ErrorReporter.new().reportHostError(Error; Error method; Error formula; Error line; Current process; Get call chain)
 ```
 
-**Important:** Components have separate Storage objects from their host projects. By passing the host's Storage, the test framework can set flags that your host project's triggers can check.
+#### Step 2: Create `Testing_ReportGlobalError` Project Method
+
+```4d
+// Error handler to capture global project errors and report to testing component
+cs.Testing.ErrorReporter.new().reportGlobalError(Error; Error method; Error formula; Error line; Current process; Get call chain)
+```
+
+#### Step 3: Create `RunTests` Project Method
+
+```4d
+// Necessary to run tests using the Testing component, passing in cs from host.
+// Use as entrypoint when calling via tool4d
+// e.g. tool4d --project Project/MyProject.4DProject --skip-onstartup --dataless --startup-method "RunTests"
+ON ERR CALL("Testing_ReportGlobalError"; ek global)
+ON ERR CALL("Testing_ReportHostError")
+Testing_RunTestsWithCs(cs)
+ON ERR CALL("")
+ON ERR CALL(""; ek global)
+```
+
+**Important:** You must pass the host project's class store (`cs`) to `Testing_RunTestsWithCs()`. This allows the testing component to discover and run test classes from your host project.
+
+#### Why This is Required
+
+**Error Handler:** Components cannot access the host's process variables (like `Error`, `Error method`, etc.). When a runtime error occurs in the host project during testing, the component cannot see it. The error handler must be in the host project to capture these process variables and manually pass them to the component using `cs.ErrorReporter`.
+
+**Class Store (`cs`):** The testing framework needs access to your project's class store to:
+- Discover test classes ending with "Test"
+- Instantiate test classes from your project
+- Execute test methods within the correct context
+
+Without passing the host project's class store, the framework cannot access your test classes since they exist in the host project rather than the component.
 
 ### Implementing Trigger Control in Host Projects
 
