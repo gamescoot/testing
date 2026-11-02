@@ -41,13 +41,13 @@ USER_PARAMS := $(strip $(BASE_PARAMS) $(if $(format),format=$(format)) $(if $(ta
 $(TOOL4D):
 	@echo "tool4d not found at $(TOOL4D). Installing..."
 	@if [ "$(UNAME_S)" = "Linux" ]; then \
-	        apt-get update && \
-	        apt-get install -y curl libc++1 uuid-runtime libfreeimage3 xdg-user-dirs; \
+	        sudo apt-get update && \
+	        sudo apt-get install -y curl libc++1 uuid-runtime libfreeimage3 xdg-user-dirs; \
 	        curl -L -o /tmp/libtinfo5.deb http://archive.ubuntu.com/ubuntu/pool/main/n/ncurses/libtinfo5_6.1-1ubuntu1_amd64.deb; \
 	        curl -L -o /tmp/libncurses5.deb http://archive.ubuntu.com/ubuntu/pool/main/n/ncurses/libncurses5_6.1-1ubuntu1_amd64.deb; \
-	        dpkg -i /tmp/libtinfo5.deb /tmp/libncurses5.deb; \
+	        sudo dpkg -i /tmp/libtinfo5.deb /tmp/libncurses5.deb; \
 	        curl -L -o /tmp/tool4d.deb $(TOOL4D_URL_LINUX); \
-	        dpkg --force-depends -i /tmp/tool4d.deb; \
+	        sudo dpkg --force-depends -i /tmp/tool4d.deb; \
 	else \
 	        echo "Automatic installation for $(UNAME_S) not implemented. Please install tool4d manually."; \
 	        exit 1; \

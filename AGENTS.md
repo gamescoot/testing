@@ -79,8 +79,9 @@ If you need more control or the Makefile doesn't meet your needs:
 ### Linux setup notes
 
 - See [docs/running-tests-linux.md](docs/running-tests-linux.md) for a step-by-step walkthrough of provisioning the experimental Linux build of **tool4d**.
-- Running `make test` on Linux installs the required system libraries (`libc++1`, `uuid-runtime`, `libfreeimage3`, `xdg-user-dirs`, `libtinfo5`, `libncurses5`) and downloads `tool4d` to `/opt/tool4d` before executing the suite.
+- Running `make test` on Linux installs the required system libraries (`libc++1`, `uuid-runtime`, `libfreeimage3`, `xdg-user-dirs`, `libtinfo5`, `libncurses5`) and downloads `tool4d` to `/opt/tool4d` before executing the suite (uses `sudo` for package installation).
 - Use `make tool4d` when you only need to bootstrap the runtime without immediately running the tests.
+- Cloud Agents run `.cursor/cloud-agent-install.sh` during environment install; it performs the same bootstrap idempotently.
 - After installation you can invoke `/opt/tool4d/tool4d --project ... --user-param "excludeTags=no-linux"` directly for manual, headless runs.
 
 ### Test Filtering Parameters
